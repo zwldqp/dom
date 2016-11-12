@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #div1{
+            width: 200px;
+            height: 200px;
+            background: red;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div id="div1"></div>
+    <script>
+        var oDiv = document.getElementById('div1');
+        var iDisX = iDisY =0;
+        oDiv.onmousedown=function (e){
+            e=e||window.event; //能力检测
+            iDisX= e.clientX-oDiv.offsetLeft;  //  clientX得到当前鼠标位置到浏览器最左边的距离  document.documentElement.clientWidth 得到浏览器宽度
+            iDisY= e.clientY-oDiv.offsetTop;
+            document.onmousemove=function(e){
+                e=e||window.event;
+                var iLeft =e.clientX-iDisX;
+                var iTop =e.clientY-iDisY;
+
+                if(iLeft<=20){
+                    iLeft=0;    //拖拽出不去浏览器
+                }
+                if(iTop<=20){
+                    iTop=0;
+                }
+                if(iLeft>=document.documentElement.clientWidth-oDiv.offsetWidth){
+                    iLeft=document.documentElement.clientWidth-oDiv.offsetWidth;
+                }
+                if(iTop>=document.documentElement.clientHeight-oDiv.offsetHeight){
+                    iTop=document.documentElement.clientHeight-oDiv.offsetHeight;
+                }
+                oDiv.style.left=iLeft+'px';
+                oDiv.style.top= iTop+'px';
+//                e.preventDefault();  防止默认行为   除去拖拽时后面的字等被选中  ie不支持
+//                e.returnValue=false;   ie中的方法  同上
+                return false;   //兼容
+            };
+            oDiv.onmouseup=function(){
+                document.onmousemove=null;
+                oDiv.onmouseup=null;
+            };
+        };
+
+    </script>
+</body>
+</html>
