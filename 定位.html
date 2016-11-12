@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #div1{
+            width: 100px;
+            height: 100px;
+            background: #00ff00;
+            position: absolute;
+        }
+        #div3{
+            width: 200px;
+            height: 200px;
+            background: #ff0000;
+        }
+    </style>
+</head>
+<body>
+<div id="div3">
+
+</div>
+<div id="div2">
+    <div id="div1"></div>
+</div>
+<button id="btn">add</button>
+<ul id="ul1">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+<script>
+    var oDiv1 = document.getElementById('div1');
+    setTimeout(function(){
+        console.log(只到1000毫秒时执行一次);
+    },1000);
+    //如果事件为0，跳出当前任务队列  直到所有的都执行完在执行
+    var oDiv=document.getElementById('div3');
+    oDiv.offsetWidth  //得到元素宽   包含border的宽度
+    oDiv.offsetHeight //得到元高度   包含border的宽度
+    oDiv1.offsetLeft //离他最近的已经定位的祖先元素左边的距离
+    oDiv.offsetParent //理他最近的祖先元素
+    var oBtn= document.getElementById('btn');
+    var oUl=document.getElementById('ul1');
+    oBtn.onclick=function(){
+        var oLi = document.createElement('li');//创建新的元素
+        oUl.appendChild('oLi');//追加到父元素中
+    }
+</script>
+</body>
+</html>
