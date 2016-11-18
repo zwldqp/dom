@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #small-box{
+            width: 400px;
+            height: 400px;
+            border: 1px solid #000;
+            overflow: hidden;
+            position: relative;
+        }
+        #float{
+            width: 100px;
+            height: 100px;
+            background: #cccccc;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0.4;
+            filter: alpha(opacity=50);
+            display: none;
+        }
+        #big-pic{
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        #big-box{
+            width: 500px;
+            height: 500px;
+            border: 1px solid #000000;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            left: 410px;
+            display: none;
+        }
+        #mask{
+            width: 400px;
+            height: 400px;
+            position: absolute;
+            background: #eeeeee;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            filter: alpha(opacity= 0);
+        }
+    </style>
+</head>
+<body>
+    <div id="small-box">
+        <img src=" imgs/b.jpg" alt="" id="small-pic"/>
+        <div id="float"></div>
+        <!--由于ie中float移动时一直抖，所以加一个透明罩  就好了  没有原因 ie中元素必须加颜色才能用，所以加完颜色要加透明度 -->
+        <div id="mask"></div>
+    </div>
+    <div id="big-box">
+        <img src="imgs/c.jpg" alt="" id="big-pic"/>
+    </div>
+    <script>
+        var oSmallBox = document.getElementById('small-box');
+        var oSmallPic = document.getElementById('small-pic');
+        var oBigBox = document.getElementById('big-box');
+        var oBigPic = document.getElementById('big-pic');
+        var oFloat = document.getElementById('float');
+        oSmallBox.onmouseover=function(){
+            oFloat.style.display='block';
+            oBigBox.style.display='block';
+        }
+        oSmallBox.onmousemove=function(e){
+            e=e||window.event;
+            var iLeft =  e.clientX- oFloat.offsetWidth/2;
+            var iTop = e.clientY- oFloat.offsetHeight/2;
+            if(iLeft<=0){
+                iLeft=0;
+            }
+            if(iTop<=0){
+                iTop=0;
+            }
+            if(iLeft>=oSmallBox.offsetWidth-oFloat.offsetWidth){
+                iLeft=oSmallBox.offsetWidth-oFloat.offsetWidth;
+            }
+            if(iTop>=oSmallBox.offsetHeight-oFloat.offsetHeight){
+                iTop = oSmallBox.offsetHeight-oFloat.offsetHeight;
+            }
+            oFloat.style.left =iLeft+'px';
+            oFloat.style.top = iTop+'px';
+            var fScaleX = iLeft/(oSmallBox.offsetWidth-oFloat.offsetWidth);
+            var fScaleY = iTop/(oSmallBox.offsetHeight-oFloat.offsetHeight);
+            oBigPic.style.left = -fScaleX*(oBigPic.offsetWidth-oBigBox.offsetWidth)+'px';
+            oBigPic.style.top = -fScaleY*(oBigPic.offsetHeight-oBigBox.offsetHeight)+'px'
+        };
+        oSmallBox.onmouseout=function(){
+            oFloat.style.display='none';
+            oBigBox.style.display='none';
+        }
+    </script>
+</body>
+</html>
